@@ -21,7 +21,8 @@ class CompileYearReport {
 			streets: {
 				street1: ['Flatbush Ave', 1888, 14],
 				street2: ['Caton Ave', 1777, 66],
-				street3: ['Church Ave', 1874, 45]
+				street3: ['Church Ave', 1874, 45],
+				milesTotal: this.street1 + this.street2 + this.street3				
 			}
 		});
 
@@ -55,13 +56,17 @@ class CompileYearReport {
 		drArea = brooklyn.get('DR Park').parkArea;
 
 		return {
-			
+
 			prospectPark: 'Prospect Park',
 			groverClev: 'GroverClevland Park',
 			drPark: 'DR Park',
 			prospectDensity: prospectTrees / prospectPArea,
 			groveDensity: groverTress / groveArea,
 			drDensity: drTrees / drArea,
+			prospectYear: brooklyn.get('Prospect Park').year,
+			groveYear: brooklyn.get('GroverClevland Park').year,
+			drParkYear: brooklyn.get('DR Park').year,
+			numOfParks: brooklyn.size
 		}
 	}
 
@@ -75,16 +80,22 @@ class CompileYearReport {
 		let currentYear, age1, age2, age3;
 		currentYear = new Date();
 		return {
-			parkAge1: currentYear.getFullYear() - brooklyn.get('Prospect Park').year,
-			parkAge2: currentYear.getFullYear() - brooklyn.get('GroverClevland Park').year,
-			parkAge3: currentYear.getFullYear() - brooklyn.get('DR Park').year
+			parkAge1: currentYear.getFullYear() - this.mappings().prospectYear,
+			parkAge2: currentYear.getFullYear() - this.mappings().groveYear,
+			parkAge3: currentYear.getFullYear() - this.mappings().drParkYear
 		}
 	}
 
 	printAverageAgeOfParks() {
 		let averageAge, treeAge;
-		averageAge = Math.floor((this.getTreeAge().parkAge1 + this.getTreeAge().parkAge2 + this.getTreeAge().parkAge2) / brooklyn.size);
-		console.log(`Our ${brooklyn.size} parks have an average age of ${averageAge} years.`);
+		
+		averageAge = Math.floor(
+			(this.getTreeAge().parkAge1 +
+			 this.getTreeAge().parkAge2 +
+			  this.getTreeAge().parkAge2) /
+			   this.mappings().numOfParks);
+
+		console.log(`Our ${this.mappings().numOfParks} parks have an average age of ${averageAge} years.`);
 	}
 
 	greaterThanOneThousand() {
@@ -104,7 +115,7 @@ class CompileYearReport {
 	}
 }
 
-(class PrintOutYearReport extends CompileYearReport {
+class PrintOutYearReport extends CompileYearReport {
 	constructor(parkName, reportName, reportID) {
 		super(reportName, reportID);
 
@@ -115,7 +126,8 @@ class CompileYearReport {
 
 		console.log(`-----2019 STREETS REPORT #${this.reportID}------`)
 	}
-})();
 
+};
 
 const ProspectPark = new PrintOutYearReport('Tree_Re_2019_Report');
+
