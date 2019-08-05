@@ -18,34 +18,25 @@ class CompileYearReport {
 			trees:254,
 			year:1988,
 			parkArea: 100,
-			streets: {
-				street1: ['Flatbush Ave', 1888, 14],
-				street2: ['Caton Ave', 1777, 66],
-				street3: ['Church Ave', 1874, 45],
-				milesTotal: this.street1 + this.street2 + this.street3				
-			}
 		});
 
 		brooklyn.set('GroverClevland Park', {
 			trees:700,
 			year: 1930,
 			parkArea: 1021,
-			streets: {
-				street1: ['Green Street', 1812, 5],
-				street2: ['Stone Ave', 1984, 10],
-				street3: ['Auburn Road', 1988, 10]
-			}
 		});
 
 		brooklyn.set('DR Park', {
 			trees: 3000, 
 			year:1960,
 			parkArea: 200,
-			streets: {
+		});
+
+		brooklyn.set('Streets', {
 				street1: ['Flatland Ave',1545, 25],
 				street2: ['Renson Ave', 1455, 15],
-				street3: ['Avenue U', 1744, 20]
-			}
+				street3: ['Avenue U', 1744, 20],
+				street3: ['Avenue Z', 1944, 77]
 		});
 
 		prospectTrees = brooklyn.get('Prospect Park').trees;
