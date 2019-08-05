@@ -66,7 +66,8 @@ class CompileYearReport {
 			prospectYear: brooklyn.get('Prospect Park').year,
 			groveYear: brooklyn.get('GroverClevland Park').year,
 			drParkYear: brooklyn.get('DR Park').year,
-			numOfParks: brooklyn.size
+			numOfParks: brooklyn.size,
+			parks: brooklyn.entries()
 		}
 	}
 
@@ -88,7 +89,7 @@ class CompileYearReport {
 
 	printAverageAgeOfParks() {
 		let averageAge, treeAge;
-		
+
 		averageAge = Math.floor(
 			(this.getTreeAge().parkAge1 +
 			 this.getTreeAge().parkAge2 +
@@ -99,7 +100,7 @@ class CompileYearReport {
 	}
 
 	greaterThanOneThousand() {
-		for (let park of brooklyn.entries()) {
+		for (let park of this.mappings().parks) {
 			if (park[1].trees > 1000){
 				console.log(`Hey guess what? ${park[0]} has over 1000 trees!`);
 			}
