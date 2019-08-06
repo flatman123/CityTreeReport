@@ -1,7 +1,3 @@
-// ES6 version
-
-
-
 class CompileYearReport {
 	constructor (parkName, reportName, reportID) {
 		this.parkName = parkName;
@@ -75,7 +71,11 @@ class CompileYearReport {
 					);
 				return miles;
 			},
-			averageMiles: this.totalLength / streets.length,
+			averageMiles: this.totalLength / Object.keys(streets).length,
+			numOfStreets: () => {
+				let numberOfStreets = Object.keys(streets).length;
+				return numberOfStreets
+			}
 		}
 	}
 
@@ -103,7 +103,6 @@ class CompileYearReport {
 			 this.getTreeAge().parkAge2 +
 			  this.getTreeAge().parkAge2) /
 			   this.mappings().numOfParks);
-
 		console.log(`Our ${this.mappings().numOfParks} parks have an average age of ${averageAge} years.`);
 	}
 
@@ -116,14 +115,12 @@ class CompileYearReport {
 	}
 
 	totalStreetLength() {
-		let miles, averageMiles, street;
+		let miles, average, streets;
 
-		streets = this.mappings().numOfStreets;
-		miles = this.mappings().totalLength;
-		averageMiles = this.mappings().averageMiles;
-
-		console.log(`Our ${streets} have a total length of ${miles} miles with an average of ${averageMiles}`);
-		
+		streets = this.mappings().numOfStreets();
+		miles = this.mappings().totalLength();
+		average = this.mappings().averageMiles;
+		console.log(`Our ${streets} streets have a length of ${miles} miles and an average of ${average}`);
 	}
 
 	streetClassification(sizeDefault='normal'){
@@ -135,7 +132,7 @@ class PrintOutYearReport extends CompileYearReport {
 	constructor(parkName, reportName, reportID) {
 		super(reportName, reportID);
 
-		console.log(`-----2019 PARKS REPRORT ID#${this.reportID}-----`);
+		console.log(`-----2019 PARKS REPRORT #${this.reportID}------`);
 		this.printAverageAgeOfParks();
 		this.calcDensity();		
 		this.greaterThanOneThousand();
