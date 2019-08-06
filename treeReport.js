@@ -9,6 +9,12 @@ class CompileYearReport {
 		this.reportID = Math.floor(Math.random() * 999);
 	}
 
+	addMileage(m1, m2, m3, m4){
+		let totalMiles, average;
+		totalMiles = m1 + m2 + m3 + m4;
+		return totalMiles;
+	}
+
 	mappings() {		
 		let prospectTrees, groverTress, drTrees, prospectPArea, groveArea, drArea;
 
@@ -32,12 +38,12 @@ class CompileYearReport {
 			parkArea: 200,
 		});
 
-		brooklyn.set('Streets', {
-				street1: ['Flatland Ave',1545, 25],
-				street2: ['Renson Ave', 1455, 15],
-				street3: ['Avenue U', 1744, 20],
-				street3: ['Avenue Z', 1944, 77]
-		});
+		let streets = {
+				flatland: ['Flatland Ave',1545, 10],
+				remson: ['Renson Ave', 1455, 3],
+				aveU: ['Avenue U', 1744, 5],
+				aveZ: ['Avenue Z', 1944, 14]
+		};
 
 		prospectTrees = brooklyn.get('Prospect Park').trees;
 		groverTress = brooklyn.get('GroverClevland Park').trees;
@@ -58,7 +64,18 @@ class CompileYearReport {
 			groveYear: brooklyn.get('GroverClevland Park').year,
 			drParkYear: brooklyn.get('DR Park').year,
 			numOfParks: brooklyn.size,
-			parks: brooklyn.entries()
+			parks: brooklyn.entries(),
+			totalLength: () => {
+
+				let miles = this.addMileage.call(this,
+					streets.flatland[2],
+					streets.remson[2],
+					streets.aveU[2],
+					streets.aveZ[2]
+					);
+				return miles;
+			},
+			averageMiles: this.totalLength / streets.length,
 		}
 	}
 
@@ -82,7 +99,7 @@ class CompileYearReport {
 		let averageAge, treeAge;
 
 		averageAge = Math.floor(
-			(this.getTreeAge().parkAge1 +
+			(this.getTreeAge().parkAge1 + 
 			 this.getTreeAge().parkAge2 +
 			  this.getTreeAge().parkAge2) /
 			   this.mappings().numOfParks);
@@ -98,8 +115,15 @@ class CompileYearReport {
 		}
 	}
 
-	streetLength() {
+	totalStreetLength() {
+		let miles, averageMiles, street;
 
+		streets = this.mappings().numOfStreets;
+		miles = this.mappings().totalLength;
+		averageMiles = this.mappings().averageMiles;
+
+		console.log(`Our ${streets} have a total length of ${miles} miles with an average of ${averageMiles}`);
+		
 	}
 
 	streetClassification(sizeDefault='normal'){
@@ -115,11 +139,12 @@ class PrintOutYearReport extends CompileYearReport {
 		this.printAverageAgeOfParks();
 		this.calcDensity();		
 		this.greaterThanOneThousand();
+		this.totalStreetLength();
 
 		console.log(`-----2019 STREETS REPORT #${this.reportID}------`)
 	}
 
 };
 
-const ProspectPark = new PrintOutYearReport('Tree_Re_2019_Report');
+const prospectPark = new PrintOutYearReport('Tree_Re_2019_Report');
 
