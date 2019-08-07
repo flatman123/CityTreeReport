@@ -36,9 +36,9 @@ class CompileYearReport {
 
 		let streets = {
 				flatland: ['Flatland Ave',1545, 10],
-				remson: ['Renson Ave', 1455, 3],
+				remson: ['Renson Ave', 1455, 36],
 				aveU: ['Avenue U', 1744, 5],
-				aveZ: ['Avenue Z', 1944, 14]
+				aveZ: ['Avenue Z', 1944, 100]
 		};
 
 		prospectTrees = brooklyn.get('Prospect Park').trees;
@@ -71,7 +71,6 @@ class CompileYearReport {
 					);
 				return miles;
 			},
-			averageMiles: this.totalLength / Object.keys(streets).length,
 			numOfStreets: () => {
 				let numberOfStreets = Object.keys(streets).length;
 				return numberOfStreets
@@ -119,12 +118,28 @@ class CompileYearReport {
 
 		streets = this.mappings().numOfStreets();
 		miles = this.mappings().totalLength();
-		average = this.mappings().averageMiles;
-		console.log(`Our ${streets} streets have a length of ${miles} miles and an average of ${average}`);
+		average =  miles / streets;
+		console.log(`Our ${streets} streets have a length of ${miles} miles and an average of ${average} miles.`);
 	}
 
 	streetClassification(sizeDefault='normal'){
+		//Sizes: tiny, normal, large, huge.
+		let streetObject = this.mappings().streets;
 
+		for ( let streetName in streetObject) {
+			let nStreets = streetObject[streetName][streets[streetName].length];
+			console.log(nStreets);
+
+			if (nStreets <= 10) {
+				console.log(`${streetName} is a pretty tiny street.`);
+			} else if ( nStreets >= 50 && nStreets < 100 ) {
+				console.log(`${streetName} is a large street.`);
+			} else if (nStreets > 100) {
+				console.log(`${streetName} is a huge street!`);
+			} else {
+				console.log(`${streetName} is a pretty normal ${sizeDefault}.`)
+			}
+		}
 	}
 }
 
@@ -138,7 +153,7 @@ class PrintOutYearReport extends CompileYearReport {
 		this.greaterThanOneThousand();
 		this.totalStreetLength();
 
-		console.log(`-----2019 STREETS REPORT #${this.reportID}------`)
+		console.log(`-----2019 STREETS REPORT #${this.reportID}------`);
 	}
 
 };
