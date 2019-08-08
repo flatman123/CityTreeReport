@@ -7,7 +7,7 @@ two elements:
 1. Parks
 2 Streets
 
-It's a very small town, so right now there are only 3 parks and 4 streets. All parks have streets
+It's a very small town, so right now there are only 3 parks and 9 streets. All parks have streets
 have a name and a build year.
 
 At an end-of-year meeting, your boss wants a final report with the following:
